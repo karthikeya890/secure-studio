@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice - Secure Studio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            max-width: 800px;
+            margin: auto;
+        }
+        .invoice-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .invoice-header h1 {
+            margin: 0;
+        }
+        .invoice-details, .invoice-items, .invoice-summary {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .invoice-details td, .invoice-items th, .invoice-items td, .invoice-summary td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        .text-right {
+            text-align: right;
+        }
+        .invoice-summary {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="invoice-header">
+        <h1>Secure Studio</h1>
+        <p>123 Coworking Lane, Tech City, IN 560001</p>
+        <p>Email: support@securestudio.com | Phone: +91 98765 43210</p>
+    </div>
+
+    <table class="invoice-details">
+        <tr>
+            <td><strong>Invoice #:</strong> INV-2025001</td>
+            <td class="text-right"><strong>Date:</strong> 25-Feb-2025</td>
+        </tr>
+        <tr>
+            <td><strong>Billed To:</strong> John Doe</td>
+            <td class="text-right"><strong>Due Date:</strong> 05-Mar-2025</td>
+        </tr>
+    </table>
+
+    <table class="invoice-items">
+        <tr>
+            <th>Service</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+            <th>Total</th>
+        </tr>
+        <tr>
+            <td>Hot Desk (Monthly)</td>
+            <td class="text-right">1</td>
+            <td class="text-right">₹5,000.00</td>
+            <td class="text-right">₹5,000.00</td>
+        </tr>
+        <tr>
+            <td>Meeting Room (5 Hours)</td>
+            <td class="text-right">1</td>
+            <td class="text-right">₹2,500.00</td>
+            <td class="text-right">₹2,500.00</td>
+        </tr>
+    </table>
+
+    <table class="invoice-summary">
+        <tr>
+            <td class="text-right">Subtotal:</td>
+            <td class="text-right">₹7,500.00</td>
+        </tr>
+        <tr>
+            <td class="text-right">GST (18%):</td>
+            <td class="text-right">₹1,350.00</td>
+        </tr>
+        <tr>
+            <td class="text-right">Total Amount:</td>
+            <td class="text-right">₹8,850.00</td>
+        </tr>
+    </table>
+
+    <p><strong>Payment Method:</strong> UPI / Net Banking / Credit Card</p>
+    <p><strong>Notes:</strong> Please make the payment by the due date to avoid late fees.</p>
+</body>
+</html>

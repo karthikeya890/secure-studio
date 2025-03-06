@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mogra&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+
+  /* 🌈 Colors */
+  --primary-color: #048DE3;
+  --secondary-color: #006198;
+  --secondary-color-500: #91bdda;
+  --support-color: #FF7C00;
+  --success-color: #28a745;
+  --error-color: #dc3545;
+  --warning-color: #ffc107;
+  --info-color: #17a2b8;
+  --light-color: #f8f9fa;
+  --dark-color: #000;
+
+  /* 🎨 Text Colors */
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --text-light: #f8f9fa;
+  
+  /* 🔤 Fonts */
+  --font-family: "Roboto";
+  --font-size-base: 16px;
+  --font-weight-normal: 400;
+  --font-weight-bold: 700;
+
+  /* 📏 Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+
+  /* 📦 Container Widths */
+  --container-width-sm: 640px;
+  --container-width-md: 768px;
+  --container-width-lg: 1024px;
+  --container-width-xl: 1280px;
+
+  /* 🟦 Border Radius */
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 16px;
+
+  /* 📏 Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+  /* ⚡ Transitions */
+  --transition-fast: 0.2s ease-in-out;
+  --transition-normal: 0.3s ease-in-out;
+  --transition-slow: 0.5s ease-in-out;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+*{
+  font-family: var(--font-family);
+  box-sizing: border-box;
+}
+
+
+/* Vertical Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px; /* Add height for horizontal scrollbar */
+  padding: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  margin: 20px 0; /* Add space above & below for vertical scrollbar */
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px; /* Smooth edges */
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Horizontal Scrollbar */
+::-webkit-scrollbar:horizontal {
+  height: 4px;
+}
+
+/* Horizontal Track */
+::-webkit-scrollbar-track:horizontal {
+  background: #f1f1f1;
+  margin: 0 20px; /* Add space on left & right */
+}
+
+/* Horizontal Handle */
+::-webkit-scrollbar-thumb:horizontal {
+  background: #888;
+  border-radius: 10px;
+}
+
+/* Horizontal Handle on hover */
+::-webkit-scrollbar-thumb:horizontal:hover {
+  background: #555;
+}
+
+form {
+  width: 100%;
+}

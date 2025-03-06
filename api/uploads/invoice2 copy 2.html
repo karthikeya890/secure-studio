@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Studio Invoice</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #000000;
+        }
+        .invoice-container {
+            width: 800px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            border: 1px solid #006195;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .header {
+            background-color: #006195;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 4px solid #038AD9;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+        .header p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+        .details {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 2px solid #038AD9;
+        }
+        .details div {
+            width: 45%;
+        }
+        .details h3 {
+            color: #006195;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        .details p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px;
+        }
+        .items-table th, .items-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .items-table th {
+            background-color: #038AD9;
+            color: #ffffff;
+            font-weight: bold;
+        }
+        .items-table td {
+            font-size: 14px;
+        }
+        .total {
+            text-align: right;
+            padding: 20px;
+            font-size: 16px;
+        }
+        .total span {
+            color: #FF7A00;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        .footer {
+            background-color: #006195;
+            color: #ffffff;
+            text-align: center;
+            padding: 15px;
+            font-size: 12px;
+            border-top: 4px solid #FF7A00;
+        }
+        .footer p {
+            margin: 5px 0;
+        }
+        .highlight {
+            color: #FF7A00;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="invoice-container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Secure Studio</h1>
+            <p>Your Premier Co-Working Space Solution</p>
+            <p>123 Workspace Lane, Tech City, TC 45678</p>
+            <p>Email: billing@securestudio.com | Phone: (555) 123-4567</p>
+        </div>
+
+        <!-- Invoice Details -->
+        <div class="details">
+            <div>
+                <h3>Billed To</h3>
+                <p>Jane Doe</p>
+                <p>456 Client Road</p>
+                <p>Business Town, BT 78901</p>
+                <p>Email: jane.doe@example.com</p>
+            </div>
+            <div>
+                <h3>Invoice Details</h3>
+                <p><strong>Invoice Number:</strong> SS-2025-00123</p>
+                <p><strong>Date Issued:</strong> February 25, 2025</p>
+                <p><strong>Due Date:</strong> March 10, 2025</p>
+                <p><strong>Status:</strong> <span class="highlight">Pending</span></p>
+            </div>
+        </div>
+
+        <!-- Items Table -->
+        <table class="items-table">
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Duration</th>
+                    <th>Quantity</th>
+                    <th>Unit Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Hot Desk Booking</td>
+                    <td>Daily</td>
+                    <td>5</td>
+                    <td>$25.00</td>
+                    <td>$125.00</td>
+                </tr>
+                <tr>
+                    <td>Meeting Room (Small)</td>
+                    <td>2 Hours</td>
+                    <td>1</td>
+                    <td>$50.00</td>
+                    <td>$50.00</td>
+                </tr>
+                <tr>
+                    <td>Virtual Address Subscription</td>
+                    <td>Monthly</td>
+                    <td>1</td>
+                    <td>$75.00</td>
+                    <td>$75.00</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Total -->
+        <div class="total">
+            <p>Subtotal: $250.00</p>
+            <p>Tax (5%): $12.50</p>
+            <p>Total Due: <span>$262.50</span></p>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Payment Instructions</p>
+            <p>Please remit payment via bank transfer to:</p>
+            <p>Account Name: Secure Studio | Account Number: 1234-5678-9012</p>
+            <p>Bank: TechBank | Routing: TB123456789</p>
+            <p>Thank you for choosing Secure Studio! Contact us at support@securestudio.com for any inquiries.</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<mj-section>
+  <mj-column width="100%">
+    <mj-text mj-class="body-text">
+      Best regards,<br />
+      The {{AppName}} Team
+    </mj-text>
+  </mj-column>
+</mj-section>
+
+<mj-section padding="40px 0 20px 0" background-color="#ffffff">
+  <mj-column>
+    <mj-divider border-width="1px" border-style="dashed" border-color="#e0e0e0" padding="0 0 20px 0" />
+    <mj-text align="center" padding="10px 0">
+      <a href="https://www.facebook.com/people/SStudio/61572187624570/" target="_blank">
+        <img width="32px" src="https://cdn.racchabanda.app/images/_/email/facebook2x.png" alt="Facebook" />
+      </a>
+      <a href="https://www.instagram.com/securestudioofficial" target="_blank" style="padding: 0 10px;">
+        <img width="32px" src="https://cdn.racchabanda.app/images/_/email/instagram2x.png" alt="Instagram" />
+      </a>
+      <a href="https://www.linkedin.com/showcase/securestudio1/" target="_blank">
+        <img width="32px" src="https://cdn.racchabanda.app/images/_/email/linkedin2x.png" alt="LinkedIn" />
+      </a>
+    </mj-text>
+  </mj-column>
+</mj-section>
+
+<mj-section padding="0px" background-color="#ffffff">
+  <mj-column>
+    <mj-text mj-class="footer-text" align="center" padding="0 10px">
+      <p style="Margin:0; padding-bottom:10px; font-size:12px; line-height:18px; color:#666666; font-family: Arial, sans-serif;">
+        <span style="color:#666666 !important; text-decoration:none;">
+          <strong>+91 9494644848</strong>
+          <br /> 3rd Floor, Jakotia Complex, Opp. Ratna Hotel, Pochamma Maidan,<br /> Vasavi Colony, Kothawada, Warangal, Telangana 506002
+        </span>
+        <br />
+        <a href="mailto:support@secure.studio" name="footer_privacy" style="color:#038AD9; text-decoration:none;">
+          <strong>support@secure.studio</strong>
+        </a>&nbsp;&nbsp;|&nbsp;&nbsp;
+        <a href="https://www.secure.studio/" target="_blank" style="text-decoration:none; color:#038AD9;">
+          <strong>www.secure.studio</strong>
+        </a>
+      </p>
+    </mj-text>
+  </mj-column>
+</mj-section>

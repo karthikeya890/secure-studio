@@ -1,0 +1,224 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String           @id @default(cuid())
+  name           String?
+  email          String           @unique
+  password       String? // hashed password     
+  phone          String?
+  otp            String?
+  otpToken       String?
+  otpGeneratedAt DateTime?
+  otpExpiresAt   DateTime?
+  isRegistered   Boolean          @default(false)
+  userType       UserType         @default(USER)
+  refreshToken   RefreshToken?
+  bookings       Booking[]
+  payments       Payment[]
+  UsersOnCoupons UsersOnCoupons[]
+  Invoices       Invoice[]
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+}
+
+model ServiceCategory {
+  id          String    @id @default(uuid())
+  name        String    @unique
+  description String
+  services    Service[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @default(now()) @updatedAt
+}
+
+model Service {
+  id            String          @id @default(uuid())
+  name          String
+  category      ServiceCategory @relation(fields: [categoryId], references: [id])
+  categoryId    String
+  availability  Int
+  bookings      Booking[]
+  subscriptions Subscription[]
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @default(now()) @updatedAt
+}
+
+model Subscription {
+  id                  String              @id @default(uuid())
+  service             Service             @relation(fields: [serviceId], references: [id])
+  serviceId           String
+  name                String              @default("name")
+  features            String[]
+  price               Float               @default(0)
+  originalPrice       Float               @default(0)
+  discountPrice       Float               @default(0)
+  gstType             GstType             @default(PERCENTAGE)
+  gstValue            Float               @default(18.0) // Default GST set to 18%
+  duration            SubscriptionType // HOUR, DAY, MONTH, YEAR
+  durationValueSelect DurationValueSelect @default(DEFAULT_VALUE)
+  defaultValue        Int                 @default(1)
+  Booking             Booking[]
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @default(now()) @updatedAt
+}
+
+enum DurationValueSelect {
+  DEFAULT_VALUE
+  USER_SELECTED
+}
+
+enum GstType {
+  AMOUNT
+  PERCENTAGE
+}
+
+enum SubscriptionType {
+  HOUR
+  DAY
+  MONTH
+  YEAR
+}
+
+model Booking {
+  id             String        @id @default(uuid())
+  code           String?       @unique
+  user           User          @relation(fields: [userId], references: [id])
+  userId         String
+  service        Service       @relation(fields: [serviceId], references: [id])
+  serviceId      String
+  subscriptionId String?
+  subscription   Subscription? @relation(fields: [subscriptionId], references: [id])
+  startTime      DateTime?
+  endTime        DateTime?
+  status         BookingStatus @default(PENDING)
+  invoice        Invoice?
+  invoiceId      String?       @unique
+  payment        Payment?
+  paymentId      String?       @unique
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @default(now()) @updatedAt
+}
+
+model Payment {
+  id                 String        @id @default(uuid())
+  code               String?       @unique
+  user               User          @relation(fields: [userId], references: [id])
+  userId             String
+  amount             Float
+  status             PaymentStatus @default(PENDING)
+  razorPayOrderId    String        @unique
+  razorPayPaymentId  String?       @unique
+  razorpaySignature  String?
+  paymentCompletedAt DateTime?
+  booking            Booking       @relation(fields: [bookingId], references: [id])
+  bookingId          String        @unique // Ensures only one Payment per Booking
+  createdAt          DateTime      @default(now())
+  Coupon             Coupon?       @relation(fields: [couponId], references: [id])
+  couponId           String?
+  updatedAt          DateTime      @default(now()) @updatedAt
+}
+
+model Invoice {
+  id          String   @id @default(uuid())
+  code        String?  @unique
+  totalAmount Float
+  taxAmount   Float
+  discount    Float?
+  finalAmount Float
+  booking     Booking? @relation(fields: [bookingId], references: [id])
+  bookingId   String?  @unique // Ensures only one Invoice per Booking
+  User        User?    @relation(fields: [userId], references: [id])
+  userId      String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
+}
+
+model EmailTemplate {
+  id                String   @id @default(cuid())
+  name              String   @unique
+  defaultSubject    String
+  customizedSubject String
+  defaultContent    String // Mustache template content
+  customizedContent String // Mustache template content  
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([name])
+}
+
+model Coupon {
+  id             String           @id @default(uuid())
+  code           String           @unique
+  value          Float
+  valueType      ValueType
+  startDate      DateTime
+  endDate        DateTime
+  usageLimit     Int? // Max number of times this coupon can be used
+  minOrderAmount Float? // Minimum order value required
+  isActive       Boolean          @default(true)
+  redeemedBy     UsersOnCoupons[]
+  payments       Payment[]
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+}
+
+enum ValueType {
+  PERCENTAGE
+  AMOUNT
+}
+
+model UsersOnCoupons {
+  userId     String
+  couponId   String
+  redeemedAt DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id])
+  coupon     Coupon   @relation(fields: [couponId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@id([userId, couponId]) // Prevents duplicate redemptions by the same user
+}
+
+model RefreshToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@unique([userId, token])
+}
+
+model Amenities {
+  id        String   @id @default(cuid())
+  name      String
+  iconUrl   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+enum UserType {
+  USER
+  ADMIN
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  FAILED
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  CANCELLED
+}

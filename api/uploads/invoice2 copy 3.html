@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invoice - Secure Studio</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f9f9f9;
+      color: #000000;
+    }
+    .invoice-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .header h1 {
+      color: #006195;
+      font-size: 28px;
+      margin: 0;
+    }
+    .header p {
+      color: #038AD9;
+      font-size: 16px;
+      margin: 5px 0;
+    }
+    .invoice-details {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 30px;
+    }
+    .invoice-details div {
+      flex: 1;
+    }
+    .invoice-details h2 {
+      color: #006195;
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+    .invoice-details p {
+      margin: 5px 0;
+      color: #000000;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 30px;
+    }
+    table th, table td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    table th {
+      background-color: #038AD9;
+      color: #ffffff;
+      font-weight: bold;
+    }
+    table td {
+      color: #000000;
+    }
+    .total {
+      text-align: right;
+      font-size: 18px;
+      font-weight: bold;
+      color: #006195;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      color: #038AD9;
+      font-size: 14px;
+    }
+    .highlight {
+      color: #FF7A00;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="invoice-container">
+    <!-- Header -->
+    <div class="header">
+      <h1>Secure Studio</h1>
+      <p>Your Partner in Productive Workspaces</p>
+    </div>
+
+    <!-- Invoice Details -->
+    <div class="invoice-details">
+      <div>
+        <h2>Invoice To:</h2>
+        <p>John Doe</p>
+        <p>123 Business St, City</p>
+        <p>Email: john.doe@example.com</p>
+        <p>Phone: +123 456 7890</p>
+      </div>
+      <div>
+        <h2>Invoice Details:</h2>
+        <p>Invoice #: <span class="highlight">INV-20240520</span></p>
+        <p>Date: <span class="highlight">May 20, 2024</span></p>
+        <p>Due Date: <span class="highlight">May 27, 2024</span></p>
+      </div>
+    </div>
+
+    <!-- Invoice Table -->
+    <table>
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>Quantity</th>
+          <th>Unit Price</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Hot Desk (Daily)</td>
+          <td>2</td>
+          <td>$25.00</td>
+          <td>$50.00</td>
+        </tr>
+        <tr>
+          <td>Meeting Room (Hourly)</td>
+          <td>3</td>
+          <td>$15.00</td>
+          <td>$45.00</td>
+        </tr>
+        <tr>
+          <td>Virtual Address (Monthly)</td>
+          <td>1</td>
+          <td>$100.00</td>
+          <td>$100.00</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Total -->
+    <div class="total">
+      <p>Total Amount: <span class="highlight">$195.00</span></p>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>Thank you for choosing Secure Studio!</p>
+      <p>For any inquiries, contact us at support@securestudio.com</p>
+    </div>
+  </div>
+</body>
+</html>

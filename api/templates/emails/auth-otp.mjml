@@ -1,0 +1,75 @@
+<mjml>
+  <mj-head>
+    <mj-title>Your One-Time Password (OTP) for {{AppName}}</mj-title>
+    <mj-attributes>
+      <mj-image alt="" padding="0px"></mj-image>
+      <mj-section padding="0px"></mj-section>
+      <mj-class name="button" font-family="Arial, sans-serif" background-color="#006195" color="#ffffff" height="40px" text-transform="uppercase" font-size="16px" text-decoration="none" padding="10px 20px" border-radius="4px"></mj-class>
+      <mj-class name="footer-text" font-family="Arial, sans-serif" color="#666666" font-size="12px" line-height="18px"></mj-class>
+      <mj-class name="body-text" font-family="Arial, sans-serif" color="#111111" font-size="16px" line-height="24px" align="left"></mj-class>
+      <mj-class name="headline-text" font-family="Arial, sans-serif" color="#111111" font-size="22px" font-weight="bold" line-height="32px" align="center"></mj-class>
+      <mj-class name="social-element" margin="0 1rem"></mj-class>
+    </mj-attributes>
+    <mj-font name="Arial" href="https://fonts.googleapis.com/css?family=Arial"></mj-font>
+    <mj-style inline="inline">
+      .otp-code {
+        font-size: 24px;
+        font-weight: bold;
+        color: #006195;
+        letter-spacing: 2px;
+        background: #f8f9fa;
+        padding: 10px 20px;
+        border-radius: 8px;
+        display: inline-block;
+        margin: 10px 0;
+      }
+      .footer-link {
+        color: #038AD9 !important;
+        text-decoration: none;
+      }
+      .footer-link:hover {
+        text-decoration: underline;
+      }
+    </mj-style>
+  </mj-head>
+
+  <mj-body background-color="#ffffff">
+    <!-- Header Section -->
+    {{{header}}}
+    <mj-include path="./shared/header.mjml" />
+
+    <!-- Main Content -->
+    <mj-section padding="20px 0">
+      <mj-column width="100%">
+        <mj-text mj-class="body-text">
+          Dear {{name}},
+          <br /><br />
+          Your One-Time Password (OTP) to {{action}} your account is:
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- OTP Section -->
+    <mj-section padding="10px 0">
+      <mj-column>
+        <mj-text align="center" font-size="24px" font-family="Arial, sans-serif" color="#006195" padding="10px 0">
+          <span class="otp-code">{{otp}}</span>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Additional Instructions -->
+    <mj-section padding="20px 0">
+      <mj-column width="100%">
+        <mj-text mj-class="body-text">
+          This OTP is valid for 5 minutes. If you didn’t request this, please ignore this email.
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Footer Section -->
+    {{contactUs}}
+    <mj-include path="./shared/footer.mjml" />
+    {{{footer}}}
+  </mj-body>
+</mjml>

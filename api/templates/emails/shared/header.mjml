@@ -1,0 +1,9 @@
+<mj-section background-color="#ffffff" background-repeat="repeat" padding="10px 0 10px 0" text-align="center">
+  <mj-column>
+    <!-- Logo -->
+    <mj-image align="center" padding="10px 15px" src="https://dev-22neuro.blr1.cdn.digitaloceanspaces.com/Secure-Studio/dev/documents/test/ef53173b-0745-4832-9ab6-3448b98e2277.jpg" target="_blank" width="120px" alt="{{AppName}} Logo"></mj-image>
+    
+    <!-- Divider -->
+    <mj-divider border-width="1px" border-style="dashed" border-color="#e0e0e0" padding="10px 0 20px 0" />
+  </mj-column>
+</mj-section>

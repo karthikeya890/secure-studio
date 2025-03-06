@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice - Secure Studio</title>
+    <style>
+        :root {
+            --primary: #006195;
+            --secondary: #038AD9;
+            --accent: #FF7A00;
+            --dark: #000000;
+            --light: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            margin: 0;
+            padding: 40px;
+            background: #ffffff;
+            color: var(--dark);
+        }
+
+        .invoice-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0.5mm 2mm rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .letterheadContainer {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            padding: 30px 40px;
+            gap: 20px;
+            justify-content: space-between;
+            height: 150px;
+        }
+
+        .letterhead-logo {
+            height: 100px;
+            background:white;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .letterhead {
+            color: white;
+        }
+
+        .letterhead h1 {
+            margin: 0;
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .letterhead p {
+            margin: 5px 0;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .invoice-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            padding: 30px 40px;
+            border-bottom: 2px solid var(--light);
+        }
+
+        .invoice-details div {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .invoice-details strong {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .invoice-items {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .invoice-items th,
+        .invoice-items td {
+            padding: 15px 30px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .invoice-items th {
+            background: var(--light);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .invoice-items td {
+            color: var(--dark);
+        }
+
+        .invoice-items .text-right {
+            text-align: right;
+        }
+
+        .invoice-summary {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .invoice-summary td {
+            padding: 15px 30px;
+            text-align: right;
+            border-bottom: 1px solid #eee;
+        }
+
+        .invoice-summary .total-amount {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .payment-info {
+            padding: 20px 40px;
+            background: var(--light);
+            border-top: 2px solid var(--light);
+        }
+
+        .payment-info p {
+            margin: 5px 0;
+        }
+
+        .footer {
+            padding: 20px 40px;
+            text-align: center;
+            color: var(--secondary);
+            font-size: 14px;
+            border-top: 2px solid var(--light);
+            height: 100px;
+        }
+
+        .footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="invoice-wrapper">
+        <!-- Letterhead -->
+        <div class="letterheadContainer">
+            <div class="letterhead">
+                <h1>Secure Studio</h1>
+                <p>123 Coworking Lane, Tech City, IN 560001</p>
+                <p>Email: support@securestudio.com | Phone: +91 98765 43210</p>
+            </div>
+            <img class="letterhead-logo" src="" />
+        </div>
+
+        <!-- Invoice Details -->
+        <div class="invoice-details">
+            <div>
+                <strong>Invoice #:</strong> INV-2025001
+                <strong>Date:</strong> 25-Feb-2025
+            </div>
+            <div>
+                <strong>Billed To:</strong> John Doe
+                <strong>Due Date:</strong> 05-Mar-2025
+            </div>
+        </div>
+
+        <!-- Invoice Items -->
+        <table class="invoice-items">
+            <thead>
+                <tr>
+                    <th>Service</th>
+                    <th class="text-right">Quantity</th>
+                    <th class="text-right">Unit Price</th>
+                    <th class="text-right">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Hot Desk (Monthly)</td>
+                    <td class="text-right">1</td>
+                    <td class="text-right">₹5,000.00</td>
+                    <td class="text-right">₹5,000.00</td>
+                </tr>
+                <tr>
+                    <td>Meeting Room (5 Hours)</td>
+                    <td class="text-right">1</td>
+                    <td class="text-right">₹2,500.00</td>
+                    <td class="text-right">₹2,500.00</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Invoice Summary -->
+        <table class="invoice-summary">
+            <tr>
+                <td>Subtotal:</td>
+                <td class="text-right">₹7,500.00</td>
+            </tr>
+            <tr>
+                <td>GST (18%):</td>
+                <td class="text-right">₹1,350.00</td>
+            </tr>
+            <tr>
+                <td class="total-amount">Total Amount:</td>
+                <td class="total-amount">₹8,850.00</td>
+            </tr>
+        </table>
+
+        <!-- Payment Info -->
+        <div class="payment-info">
+            <p><strong>Payment Method:</strong> UPI / Net Banking / Credit Card</p>
+            <p><strong>Notes:</strong> Please make the payment by the due date to avoid late fees.</p>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Thank you for choosing <a href="https://securestudio.com">Secure Studio</a>!</p>
+            <p>Terms: Payment due within 7 days. Late payments subject to 1.5% monthly interest.</p>
+        </div>
+    </div>
+</body>
+</html>
