@@ -9,7 +9,8 @@ const Header = () => {
     const { isAuthenticated } = useAuthStore();
     const location = useLocation();
     return (
-        <Flex justifyContent={"space-between"} alignItems={"center"} py={[2, 4]} px={[4, 12]} borderBottom={"1px solid"} borderColor={"gray.300"}>
+        <Flex justifyContent={"space-between"} alignItems={"center"}
+            py={[2, 4]} px={[4, 12]} borderBottom={"1px solid"} borderColor={"gray.300"}>
             <Flex justifyContent={"space-between"} alignItems={"center"}>
                 <Link href="/" outline={"none"} >
                     <Image src={logo} h={[10, 12]} />

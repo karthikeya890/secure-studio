@@ -1,4 +1,4 @@
-import { Flex } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
 import DashBoardHeader from "./shared/dashboardHeader";
 // import DashboardFooter from "./shared/dashboardFooter";
@@ -6,17 +6,18 @@ import Sidebar from "./shared/sidebar";
 const DashBoardLayout = () => {
     return (
         <Flex direction={"column"} height={"100vh"}>
-            {/* Fixed Header */}
-            <DashBoardHeader />
-
             {/* Main Content Area */}
-            <Flex flexGrow={1} overflow={"hidden"} bg={"secondary.500"} >
+            <Flex flexGrow={1} overflow={"hidden"} bg={"blue.200"} >
                 {/* Sidebar */}
                 <Sidebar />
 
-                {/* Scrollable Content */}
-                <Flex px={[2, 5]} py={[3, 8]} bg={"white"} boxShadow={"2xl"} m={3} borderRadius={10} direction={"column"} flexGrow={1} overflowY={"auto"}>
-                    <Outlet />
+                <Flex direction={"column"} flexGrow={1} borderRadius={25} >
+                    {/* Fixed Header */}
+                    <Box  ><DashBoardHeader /></Box>
+                    {/* Scrollable Content */}
+                    <Flex m={3} direction={"column"} flexGrow={1} overflowY={"auto"}>
+                        <Outlet />
+                    </Flex>
                 </Flex>
             </Flex>
 

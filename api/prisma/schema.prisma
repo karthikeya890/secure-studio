@@ -20,18 +20,22 @@ model User {
   isRegistered   Boolean          @default(false)
   userType       UserType         @default(USER)
   refreshToken   RefreshToken?
+  company        Company?
   bookings       Booking[]
   payments       Payment[]
   UsersOnCoupons UsersOnCoupons[]
   Invoices       Invoice[]
+  userAdminId    String?          @unique // Foreign key to track who is the admin
+  userAdmin      User?            @relation("AdminToEmployees", fields: [userAdminId], references: [id])
+  employees      User[]           @relation("AdminToEmployees")
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
 }
 
 model ServiceCategory {
   id          String    @id @default(uuid())
-  name        String    @unique
-  description String
+  name        String    @unique @db.VarChar(20)
+  description String?
   services    Service[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @default(now()) @updatedAt
@@ -39,7 +43,8 @@ model ServiceCategory {
 
 model Service {
   id            String          @id @default(uuid())
-  name          String
+  name          String          @unique @db.VarChar(20)
+  description   String?
   category      ServiceCategory @relation(fields: [categoryId], references: [id])
   categoryId    String
   availability  Int
@@ -63,9 +68,17 @@ model Subscription {
   duration            SubscriptionType // HOUR, DAY, MONTH, YEAR
   durationValueSelect DurationValueSelect @default(DEFAULT_VALUE)
   defaultValue        Int                 @default(1)
+  advanceType         AdvanceType         @default(NIL)
+  advanceValue        Float?
   Booking             Booking[]
   createdAt           DateTime            @default(now())
   updatedAt           DateTime            @default(now()) @updatedAt
+}
+
+enum AdvanceType {
+  NIL
+  MONTHS
+  AMOUNT
 }
 
 enum DurationValueSelect {
@@ -155,6 +168,7 @@ model EmailTemplate {
 model Coupon {
   id             String           @id @default(uuid())
   code           String           @unique
+  discountFor    DiscountFor
   value          Float
   valueType      ValueType
   startDate      DateTime
@@ -166,6 +180,11 @@ model Coupon {
   payments       Payment[]
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
+}
+
+enum DiscountFor {
+  PRICE
+  ADVANCE
 }
 
 enum ValueType {
@@ -204,9 +223,20 @@ model Amenities {
   updatedAt DateTime @default(now()) @updatedAt
 }
 
+model Company {
+  id        String   @id @default(cuid())
+  name      String
+  GSTIN     String?
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
 enum UserType {
   USER
-  ADMIN
+  USER_ADMIN
+  SUPER_ADMIN
 }
 
 enum BookingStatus {

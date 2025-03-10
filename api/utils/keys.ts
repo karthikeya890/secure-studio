@@ -7,7 +7,7 @@ const readFile = util.promisify(fs.readFile);
 
 // Function to get the private key
 export const getPrivateKey = async (): Promise<string> => {
-  const privateKeyPath = path.join(__dirname, '../data/keys/_audiopen.com.privkey');
+  const privateKeyPath = path.join(__dirname, '../data/keys/_secureStudio.com.privkey');
   try {
     const privateKey = await readFile(privateKeyPath, 'utf8');
     return privateKey;
@@ -18,7 +18,7 @@ export const getPrivateKey = async (): Promise<string> => {
 
 // Function to get the public key
 export const getPublicKey = async (): Promise<string> => {
-  const publicKeyPath = path.join(__dirname, '../data/keys/_audiopen.com');
+  const publicKeyPath = path.join(__dirname, '../data/keys/_secureStudio.com');
   try {
     const publicKey = await readFile(publicKeyPath, 'utf8');
     return publicKey;

@@ -1,6 +1,6 @@
 import { prisma } from "../prismaClient";
 
-export class ServiceCategoryService {
+class ServiceCategoryService {
 
   async getAllServiceCategories() {
     try {

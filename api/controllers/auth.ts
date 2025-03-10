@@ -7,7 +7,7 @@ import cuid from "cuid";
 import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from "../utils/tokenGenerators";
 import { validateAuthToken } from "../validators/token";
 
-const refreshLocks: { [key: string]: boolean } = {}; //TODO:Need to use Redis instead of In-memory
+const refreshLocks: { [key: string]: boolean } = {};
 
 const getOtpExpiryDateTime = (otpGeneratedTime: any) => {
   try {
@@ -18,16 +18,17 @@ const getOtpExpiryDateTime = (otpGeneratedTime: any) => {
   }
 }
 
-export class AuthController {
+class AuthController {
 
   async sendOtp(req: Request, res: Response): Promise<void> {
     try {
       const email = req.body.email;
       const data = await validateAuthEmail(email);
-      const otp = generateOTP();
+      const otp: string = generateOTP();
       const otpToken = cuid();
       const otpGeneratedAt = new Date();
       const otpExpiresAt = getOtpExpiryDateTime(otpGeneratedAt);
+      console.log(data);
       if (data.isExistingUser) {
         await userMiscService.updateUserOtpDetails({ email, otp, otpToken, otpGeneratedAt, otpExpiresAt })
       } else {
@@ -47,9 +48,10 @@ export class AuthController {
       const otpToken = req.body.otpToken;
       const email = req.body.email;
       await validateOtpVerification({ otp, otpToken, email });
+      await userService.updateUser({ email, isRegistered: true })
       const userData: any = await userMiscService.getUserDetailsforToken(email);
-      const accessToken = await generateAccessToken(userData);
-      const refreshToken = await generateRefreshToken(userData);
+      const accessToken: any = await generateAccessToken(userData);
+      const refreshToken: any = await generateRefreshToken(userData);
       successResponse(res, "OTP Verified Successfully", { accessToken, refreshToken, user: userData });
     } catch (error: any) {
       error.status === 400 ? console.error(`⚠️  Validation: ${error.message}`) : console.error(`🚫  Error: ${error}`)

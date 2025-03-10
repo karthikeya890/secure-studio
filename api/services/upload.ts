@@ -1,6 +1,5 @@
 import { S3, PutObjectCommand, PutObjectCommandInput, ObjectCannedACL, DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { createReadStream, promises as fsPromises } from "fs";
-import url from "url";
 
 const s3Client = new S3({
     forcePathStyle: false,
@@ -14,7 +13,7 @@ const s3Client = new S3({
 
 const bucketName = `${process.env.ENVIRONMENT}-${process.env.S3_BUCKET_PREFIX}`;
 
-export class S3Service {
+class S3Service {
     async uploadFile(bucketParamKey: string, filePath: string, contentType: string): Promise<string> {
         if (!bucketParamKey || !filePath) {
             console.debug("Key or filePath not received");

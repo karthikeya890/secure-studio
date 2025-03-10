@@ -1,7 +1,8 @@
-import React, { useRef, useState, CSSProperties } from 'react';
+import React, { useRef, useState } from 'react';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { Box } from '@chakra-ui/react';
+import { transform } from 'html2canvas/dist/types/css/property-descriptors/transform';
 // Type definitions
 interface InvoiceItem {
     id: number;
@@ -83,9 +84,8 @@ const Invoice: React.FC = () => {
     const styles = {
         // Main container
         container: {
-            padding: '24px',
             fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
-            color: '#333333'
+            color: '#333333',
         },
         // Controls section
         controlsContainer: {
@@ -155,12 +155,11 @@ const Invoice: React.FC = () => {
         },
         // Invoice container
         invoiceContainer: {
-            padding: '40px',
+            padding: '20px',
             border: '1px solid #e2e8f0',
             borderRadius: '8px',
             backgroundColor: 'white',
             maxWidth: '800px',
-            margin: '0 auto',
             boxShadow: '0 4px 6px rgba(0, 0, 0, 0.05)'
         },
         // Header styles
@@ -344,7 +343,7 @@ const Invoice: React.FC = () => {
             const input = invoiceRef.current;
 
             // Calculate scale based on DPI
-            const scale = getScaleFromDpi(pdfSettings.dpi);
+            const scale = 2 // getScaleFromDpi(pdfSettings.dpi);
 
             // Generate high-quality canvas with proper scaling
             const canvas = await html2canvas(input, {
@@ -408,11 +407,11 @@ const Invoice: React.FC = () => {
         const invoiceHtml = invoiceRef.current.outerHTML;
 
         printWindow.document.open();
-        printWindow.document.write(`
+        printWindow.document.writeln(`
       <!DOCTYPE html>
       <html>
         <head>
-          <title>Print Invoice ${invoiceData.invoiceNumber}</title>
+          <title>Print Invoiced ${invoiceData.invoiceNumber}</title>
           <style>
             body {
               font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -443,73 +442,7 @@ const Invoice: React.FC = () => {
 
     return (
         <div style={styles.container}>
-            {/* PDF Quality Controls */}
-            <div style={styles.controlsContainer}>
-                <h2 style={styles.controlsTitle}>Download Options</h2>
-                <div style={styles.controlsRow}>
-                    <div style={styles.controlGroup}>
-                        <label style={styles.label} htmlFor="dpi-select">Quality (DPI)</label>
-                        <select
-                            id="dpi-select"
-                            style={styles.select}
-                            value={pdfSettings.dpi}
-                            onChange={handleDpiChange}
-                            disabled={isGenerating}
-                        >
-                            <option value="150">Standard (150 DPI)</option>
-                            <option value="300">High (300 DPI)</option>
-                            <option value="600">Very High (600 DPI)</option>
-                        </select>
-                    </div>
 
-                    <div style={styles.controlGroup}>
-                        <label style={styles.label} htmlFor="format-select">Paper Size</label>
-                        <select
-                            id="format-select"
-                            style={styles.select}
-                            value={pdfSettings.format}
-                            onChange={handleFormatChange}
-                            disabled={isGenerating}
-                        >
-                            <option value="a4">A4</option>
-                            <option value="letter">Letter</option>
-                            <option value="legal">Legal</option>
-                        </select>
-                    </div>
-
-                    <div style={styles.controlGroup}>
-                        <label style={styles.label} htmlFor="orientation-select">Orientation</label>
-                        <select
-                            id="orientation-select"
-                            style={styles.select}
-                            value={pdfSettings.orientation}
-                            onChange={handleOrientationChange}
-                            disabled={isGenerating}
-                        >
-                            <option value="portrait">Portrait</option>
-                            <option value="landscape">Landscape</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div style={styles.buttonContainer}>
-                    <button
-                        onClick={handleDownloadPdf}
-                        style={isGenerating ? styles.disabledButton : styles.button}
-                        disabled={isGenerating}
-                    >
-                        {isGenerating ? 'Generating PDF...' : 'Download Invoice as PDF'}
-                    </button>
-
-                    <button
-                        onClick={handlePrint}
-                        style={isGenerating ? styles.disabledButton : { ...styles.button, backgroundColor: '#0f766e' }}
-                        disabled={isGenerating}
-                    >
-                        Print Invoice
-                    </button>
-                </div>
-            </div>
 
             {/* Invoice Component */}
             <Box
@@ -597,6 +530,73 @@ const Invoice: React.FC = () => {
                     <p>Thank you for your business!</p>
                 </div>
             </Box>
+            {/* PDF Quality Controls */}
+            <div style={styles.controlsContainer}>
+                <h2 style={styles.controlsTitle}>Download Options</h2>
+                <div style={styles.controlsRow}>
+                    <div style={styles.controlGroup}>
+                        <label style={styles.label} htmlFor="dpi-select">Quality (DPI)</label>
+                        <select
+                            id="dpi-select"
+                            style={styles.select}
+                            value={pdfSettings.dpi}
+                            onChange={handleDpiChange}
+                            disabled={isGenerating}
+                        >
+                            <option value="150">Standard (150 DPI)</option>
+                            <option value="300">High (300 DPI)</option>
+                            <option value="600">Very High (600 DPI)</option>
+                        </select>
+                    </div>
+
+                    <div style={styles.controlGroup}>
+                        <label style={styles.label} htmlFor="format-select">Paper Size</label>
+                        <select
+                            id="format-select"
+                            style={styles.select}
+                            value={pdfSettings.format}
+                            onChange={handleFormatChange}
+                            disabled={isGenerating}
+                        >
+                            <option value="a4">A4</option>
+                            <option value="letter">Letter</option>
+                            <option value="legal">Legal</option>
+                        </select>
+                    </div>
+
+                    <div style={styles.controlGroup}>
+                        <label style={styles.label} htmlFor="orientation-select">Orientation</label>
+                        <select
+                            id="orientation-select"
+                            style={styles.select}
+                            value={pdfSettings.orientation}
+                            onChange={handleOrientationChange}
+                            disabled={isGenerating}
+                        >
+                            <option value="portrait">Portrait</option>
+                            <option value="landscape">Landscape</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style={styles.buttonContainer}>
+                    <button
+                        onClick={handleDownloadPdf}
+                        style={isGenerating ? styles.disabledButton : styles.button}
+                        disabled={isGenerating}
+                    >
+                        {isGenerating ? 'Generating PDF...' : 'Download Invoice as PDF'}
+                    </button>
+
+                    <button
+                        onClick={handlePrint}
+                        style={isGenerating ? styles.disabledButton : { ...styles.button, backgroundColor: '#0f766e' }}
+                        disabled={isGenerating}
+                    >
+                        Print Invoice
+                    </button>
+                </div>
+            </div>
         </div>
     );
 };

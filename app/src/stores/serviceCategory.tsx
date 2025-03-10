@@ -12,6 +12,7 @@ interface ServiceCategoryState {
     scheduleCount: number;
     submitSchedule: any;
     durationDates: {},
+    
     setDurationDates: (data: any) => void;
     setSubmitSchedule: (data: any) => void;
     setScheduleCount: (value: number) => void;
@@ -40,7 +41,6 @@ const useServiceCategory = create<ServiceCategoryState>((set, get) => ({
     getAllServiceCategories: async () => {
         try {
             const response = await getAllServiceCategories();
-            console.log(response.data);
             set({ serviceCategories: response.data, selectedServiceCategoryId: response.data[0].id, selectedServiceId: response.data[0].services[0].id });
         } catch (error) {
             console.error("Failed to fetch service categories:", error);

@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { serviceCategory } from "../services/serviceCategory";
 import { errorResponse, successResponse } from "../middlewares/responseHandler";
 
-export class ServiceCategoryController {
+class ServiceCategoryController {
     async getAllServiceCategories(req: Request, res: Response): Promise<void> {
         try {
             const page = parseInt(req.query.page as string) || 1;

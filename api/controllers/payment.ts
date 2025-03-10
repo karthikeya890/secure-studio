@@ -8,7 +8,7 @@ import { Prisma } from "@prisma/client";
 import { message } from "antd";
 import { invoiceMiscService, invoiceService } from "../services/invoice";
 
-export class PaymentController {
+class PaymentController {
 
     async createOrder(req: Request, res: Response): Promise<void> {
         try {

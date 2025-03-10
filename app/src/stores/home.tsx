@@ -19,7 +19,6 @@ export const useHomeStore = create<HomeState>((set, get) => ({
     filteredServices: [],
     fetchAmenities: async () => {
         const response = await fetchAmenities();
-        console.log(response.data)
         set({ amenities: response.data });
     },
     fetchServicesCategories: async () => {

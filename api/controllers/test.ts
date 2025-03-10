@@ -4,7 +4,7 @@ import { errorResponse, successResponse } from "../middlewares/responseHandler";
 import { s3Service } from "../services/upload";
 
 
-export class TestController {
+class TestController {
 
     async uploadFile(req: Request, res: Response): Promise<void> {
         try {

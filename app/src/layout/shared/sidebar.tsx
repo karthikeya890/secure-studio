@@ -1,33 +1,40 @@
-import { Flex, Text, Image } from "@chakra-ui/react"
+import { Flex, Text, Image, Box, Link } from "@chakra-ui/react"
 import { NavLink } from "react-router-dom"
-import { Avatar } from "@chakra-ui/react"
 import DashboardIcon from "../../assets/dashboard.svg"
 import BookingIcon from "../../assets/booking.svg"
-import InvoiceIcon from "../../assets/invoice.svg"
 import SettingIcon from "../../assets/settings.svg"
+import logo from "../../assets/logo-lg.png"
 import ServicesIcon from "../../assets/services.svg"
-import useAuthStore from "../../stores/auth"
 
 const Sidebar = () => {
-
-    const { user } = useAuthStore()
-
     const sections = [
         { name: "Dashboard", path: "/dashboard", icon: DashboardIcon },
         { name: "Services", path: "/services", icon: ServicesIcon },
         { name: "Bookings", path: "/bookings", icon: BookingIcon },
-        { name: "Invoices", path: "/invoices", icon: InvoiceIcon },
         { name: "Settings", path: "/settings", icon: SettingIcon },
     ]
-
-
     const renderSection = (data: any) => {
         return (
             <NavLink key={data.path} to={data.path} >
                 {({ isActive }) => (
-                    <Flex opacity={isActive ? 1 : 0.8} gap={2} p={2} borderRadius={5} bg={isActive ? "gray.200" : ""} >
-                        <Image h={6} src={data.icon} />
-                        <Text fontSize={"md"} fontWeight="bold">
+                    <Flex
+
+                        alignItems={"center"} gap={3} position={"relative"} m={3} my={2} p={2} opacity={isActive ? 1 : 0.7} style={{ marginRight: isActive ? "0px" : "auto" }}
+                        borderRadius={25} borderRightRadius={0} bgGradient={isActive ? "to-r" : ""} gradientFrom="blue.400" gradientTo="blue.200" >
+                        {isActive && <>
+                            <Box position={"absolute"} h={5} w={5} right={0} top={-5} zIndex={9999} bg={"blue.200"} >
+                                <Box w={"100%"} h={"100%"} borderBottomRightRadius={25} bg={"white"}></Box>
+                            </Box>
+                            <Box position={"absolute"} h={5} w={5} bg={"blue.200"} right={0} bottom={-5} zIndex={9999}  >
+                                <Box w={"100%"} h={"100%"} borderTopRightRadius={25} bg={"white"}></Box>
+                            </Box>
+                        </>}
+                        <Box bg={"white"} p={2} borderRadius={"50%"}>
+                            <Image h={5} src={data.icon} />
+                        </Box>
+                        <Text color={isActive ? "white" : "blackAlpha.800"}
+                            transition="transform 0.5s ease" transform={isActive ? `translateX(5px)` : `translateX(0px)`}
+                            fontSize={"md"} fontWeight="bold">
                             {data.name}
                         </Text>
                     </Flex>
@@ -38,22 +45,20 @@ const Sidebar = () => {
 
 
     return (
-        <Flex  borderRadius={10} gap={3} direction={"column"} w={{ base: 270 }} flexShrink={0} m={{ base: 2, lg: 3 }} style={{ marginRight: 0 }}>
-            <Flex bg={"white"} gap={8} px={[2, 5]} py={[5]} direction={"column"} boxShadow={"xl"} borderRadius={10} flexGrow={1} overflow={"auto"} >
-                <Flex gap={3} borderRadius={5} alignItems={"center"}  >
-                    <Avatar.Root size={"xl"} >
-                        <Avatar.Fallback name={user.email} />
-                        <Avatar.Image src={user.profileUrl} />
-                    </Avatar.Root>
-                    <Flex direction={"column"} >
-                        <Text fontWeight={"bold"} fontSize={"sm"} >{user?.name || user.email.split("@")[0]}</Text>
-                        <Text fontWeight={"500"} color={"gray.700"} fontSize={"sm"}>{user.email}</Text>
-                    </Flex>
+        <Flex display={{ base: "none", md: "flex" }} borderRadius={10} gap={3} direction={"column"} w={{ base: "auto", lg: 270 }} flexShrink={0} mr={{ base: 2, lg: 5 }} >
+            <Flex bg={"white"} borderRightRadius={25} direction={"column"} flexGrow={1}>
+                <Flex px={[2, 5]} py={[5, 8]} >
+                    <Link href="/" outline={"none"} >
+                        <Image src={logo} h={50} />
+                    </Link>
                 </Flex>
-                <Flex direction={"column"} gap={2}>
-                    {sections.map(item => {
-                        return renderSection(item)
-                    })}
+                <Flex direction={"column"} flexGrow={1} justifyContent={"space-between"}  >
+
+                    <Flex direction={"column"}>
+                        {sections.map(item => {
+                            return renderSection(item)
+                        })}
+                    </Flex>
                 </Flex>
             </Flex>
         </Flex>

@@ -51,7 +51,8 @@ const ServiceCard = () => {
             }
             {selectedServiceCategoryId &&
                 <Flex flexGrow={1} flexDirection={"column"} borderRadius={10}>
-                    <Button bg={"dark"} onClick={reset} alignSelf={"end"} borderRadius={"50%"} h={10} w={10} >{WrongIcon("40", "40", "#fff")}</Button>
+                    <Button bg={"dark"} onClick={reset} alignSelf={"end"}
+                        borderRadius={"50%"} h={10} w={10} >{WrongIcon("40", "40", "#fff")}</Button>
                     <Steps />
                 </Flex>
             }

@@ -3,7 +3,7 @@ import { userService } from "../services/user";
 import { validateUser } from "../validators/user";
 import { errorResponse, successResponse } from "../middlewares/responseHandler";
 
-export class UserController {
+class UserController {
   async getAllUsers(req: Request, res: Response): Promise<void> {
     try {
         const page = parseInt(req.query.page as string) || 1;

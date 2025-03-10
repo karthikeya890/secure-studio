@@ -1,4 +1,4 @@
-import { Flex, Span, Text } from "@chakra-ui/react"
+import { Flex, Text, Editable } from "@chakra-ui/react"
 import { Avatar } from "@chakra-ui/react"
 import useAuthStore from "../../stores/auth"
 import Profile from "../../assets/demo-profile.png"
@@ -6,7 +6,7 @@ const ProfileCard = () => {
     const { user } = useAuthStore();
 
     return (
-        <Flex fontSize={[14, 16, 20]} height={"100%"} bg={"white"} p={[2, 5]} borderRadius={25} boxShadow={"md"}
+        <Flex bgColor={"blu"} fontSize={[14, 16, 20]} height={"100%"} bg={"white"} p={[2, 5]} borderRadius={25} boxShadow={"md"}
             justifyContent={"center"} alignItems={"center"}
             gap={10}
         >
@@ -18,26 +18,33 @@ const ProfileCard = () => {
                 </Avatar.Root>
             </Flex>
             <Flex gap={3} direction={"column"} flexGrow={1}  >
-                <Text fontSize={"1em"} fontWeight={"bold"} color={"blackAlpha.900"} >{user?.name?.toUpperCase()}</Text>
+                <Editable.Root fontSize={"1em"} fontWeight={"bold"} color={"blackAlpha.800"} textAlign="start" defaultValue={user?.name?.toUpperCase() || "not-provided"}>
+                    <Editable.Preview />
+                    <Editable.Input />
+                </Editable.Root>
+                <Flex direction={"column"} h={"100%"} flexGrow={1} fontSize={"0.8em"} >
+                    <Flex fontWeight={"bold"} color={"blackAlpha.900"} alignItems={"center"}>
+                        <Text w={"80px"} color={"blackAlpha.800"}>Email :</Text>
+                        <Editable.Root textAlign="start" defaultValue={user.email || "not-provided"}>
+                            <Editable.Preview />
+                            <Editable.Input />
+                        </Editable.Root>
 
-                <Flex gap={2} direction={"column"} h={"100%"} flexGrow={1} fontSize={"0.8em"} >
-                    <Flex gap={2} fontWeight={"bold"} color={"blackAlpha.900"}>
-                        <Span color={"blackAlpha.800"}>Email :</Span>
-                        <Text  >
-                            {user.email}
-                        </Text>
                     </Flex>
-                    <Flex gap={2} fontWeight={"bold"} color={"blackAlpha.900"}>
-                        <Span color={"blackAlpha.800"}>Phone :</Span>
-                        <Text  >
-                            {user.phone || "not-provided"}
-                        </Text>
+                    <Flex fontWeight={"bold"} color={"blackAlpha.900"} alignItems={"center"}>
+                        <Text w={"80px"} color={"blackAlpha.800"}>Phone :</Text>
+                        <Editable.Root textAlign="start" defaultValue={user.phone || "not-provided"}>
+                            <Editable.Preview />
+                            <Editable.Input />
+                        </Editable.Root>
+
                     </Flex>
-                    <Flex gap={2} fontWeight={"bold"} color={"blackAlpha.900"}>
-                        <Span color={"blackAlpha.800"}>Gender :</Span>
-                        <Text  >
-                            {user.gender || "not-provided"}
-                        </Text>
+                    <Flex fontWeight={"bold"} color={"blackAlpha.900"} alignItems={"center"}>
+                        <Text w={"80px"} color={"blackAlpha.800"}>Gender :</Text>
+                        <Editable.Root textAlign="start" defaultValue={user.gender || "not-provided"}>
+                            <Editable.Preview />
+                            <Editable.Input />
+                        </Editable.Root>
                     </Flex>
                 </Flex>
             </Flex >

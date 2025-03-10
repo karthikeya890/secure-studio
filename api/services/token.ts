@@ -1,7 +1,7 @@
 import {prisma} from "../prismaClient";
 import { Prisma } from "@prisma/client";
 
-export class TokenService {
+class TokenService {
   async upsertToken(data: any) {
     try {
       const token : Prisma.RefreshTokenUncheckedCreateInput = {

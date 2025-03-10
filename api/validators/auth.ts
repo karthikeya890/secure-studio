@@ -8,21 +8,19 @@ const authSchema = () =>
       .email()
       .required()
       .external(async (email, helpers: any) => {
-        if (!email) return true;
-
         // check if the email is already registered
         const existingUser = await prisma.user.findFirst({
           where: { email, isRegistered: true },
-          });
-        
+        });
+
         // Return extra data
-        return { isExistingUser: !!existingUser };
+        return { isExistingUser: existingUser ? true : false };
       })
       .messages({
         "string.email": "Please provide a valid email address.",
         "any.required": "Email is required.",
       }),
-});
+  });
 
 
 // Combined schema for OTP verification (OTP match + OTP expiry)
@@ -63,7 +61,7 @@ const otpVerificationSchema = () =>
     }
 
     return values;
-});
+  });
 
 export const validateAuthEmail = async (email: string) => {
   try {
@@ -72,7 +70,7 @@ export const validateAuthEmail = async (email: string) => {
     // Extract extra key from validation
     return {
       validatedData,
-      isExistingUser: validatedData.email.isExistingUser ?? false, // Ensure it's always a boolean
+      isExistingUser: validatedData.email.isExistingUser, // Ensure it's always a boolean
     }
   } catch (error: any) {
     throw { status: 400, message: error.details[0].message };

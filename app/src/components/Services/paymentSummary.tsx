@@ -32,30 +32,30 @@ const PaymentSummary: React.FC = () => {
     };
 
     return (
-        <Card.Root p={6} shadow="xl" borderWidth="1px" borderRadius="2xl" w="400px" bg="white" transition="all 0.2s" _hover={{ shadow: "2xl" }}>
+        <Card.Root border={"2px solid gray.500"} flexGrow={1} borderRadius={10} >
             <CardBody>
                 <VStack gap={6} align="stretch">
                     <Heading size="lg" textAlign="center" color="dark" mb={4}>
-                        Payment Summary
+                        Booking Summary
                     </Heading>
 
                     <Box>
                         <HStack justify="space-between" mb={2}>
                             <Text fontSize="md" color="gray.600">Price:</Text>
-                            <Text fontSize="md" fontWeight="bold">₹{(price - discount).toFixed(2)}</Text>
+                            <Text fontSize="md" fontWeight="bold">₹{(price - discount)?.toFixed(2)}</Text>
                         </HStack>
                         <HStack justify="space-between" mb={4}>
                             <Text fontSize="md" color="gray.600">Discount:</Text>
-                            <Text fontSize="md" fontWeight="bold" color="green.500">-₹{discount.toFixed(2)}</Text>
+                            <Text fontSize="md" fontWeight="bold" color="green.500">-₹{discount?.toFixed(2)}</Text>
                         </HStack>
                         <HStack justify="space-between" mb={2}>
                             <Text fontSize="md" color="gray.600">Tax ({taxType === "PERCENTAGE" ? `${taxValue}%` : `₹${taxValue}`}):</Text>
-                            <Text fontSize="md" fontWeight="bold">₹{taxAmount.toFixed(2)}</Text>
+                            <Text fontSize="md" fontWeight="bold">₹{taxAmount?.toFixed(2)}</Text>
                         </HStack>
                         <Box borderTopWidth="1px" borderColor="gray.200" pt={4}>
                             <HStack justify="space-between">
                                 <Text fontSize="lg" fontWeight="bold">Total:</Text>
-                                <Text fontSize="lg" fontWeight="bold">₹{total.toFixed(2)}</Text>
+                                <Text fontSize="lg" fontWeight="bold">₹{total?.toFixed(2)}</Text>
                             </HStack>
                         </Box>
                     </Box>
@@ -73,8 +73,7 @@ const PaymentSummary: React.FC = () => {
                         </Button>}
 
                     </Flex>
-                    {total && <RazorpayPayment totalAmount={total} coupon={discount > 0 ? coupon : null} />}
-
+                    <RazorpayPayment totalAmount={total} coupon={discount > 0 ? coupon : null} />
                 </VStack>
             </CardBody>
         </Card.Root>

@@ -2,7 +2,7 @@ import { prisma } from "../prismaClient";
 import { SubscriptionType } from "@prisma/client";
 
 
-export class SubscriptionMiscService {
+class SubscriptionMiscService {
     async getSubscriptionDetailsForOrder(id: string) {
         try {
             return await prisma.subscription.findFirst({ where: { id }, include: { service: true } })

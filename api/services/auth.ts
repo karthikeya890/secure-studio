@@ -1,7 +1,7 @@
 import { sendMail } from "../utils/mail";
 import {userMiscService} from "./user"
 
-export class AuthService {
+class AuthService {
 
   async sendRegisterMail(otp: string,email:string) {
 	try {

@@ -10,8 +10,9 @@ class BookingService {
                     where: { userId },
                     include: {
                         service: true,
-                        payment: { select: { id: true, amount: true, code: true } },
-                        subscription: { select: { defaultValue: true, duration: true } }
+                        payment: { select: { id: true, amount: true, code: true, status: true } },
+                        subscription: { select: { defaultValue: true, duration: true } },
+                        invoice: true
                     },
                     skip: (page - 1) * limit,
                     take: limit,

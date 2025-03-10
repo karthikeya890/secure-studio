@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { couponMiscService } from "../services/coupon";
 import { errorResponse, successResponse } from "../middlewares/responseHandler";
 
-export class CouponController {
+class CouponController {
     async reedemCoupon(req: Request, res: Response): Promise<void> {
         try {
             const code = req.body.code;

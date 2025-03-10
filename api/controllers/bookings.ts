@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { bookingService } from "../services/booking";
 import { errorResponse, successResponse } from "../middlewares/responseHandler";
 
-export class BookingController {
+class BookingController {
     async getAllBookingsOfUser(req: Request, res: Response): Promise<void> {
         try {
             const userId = req.user?.id as string;

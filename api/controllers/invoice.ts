@@ -18,38 +18,6 @@ class InvoiceController {
     }
     async downloadInvoice(req: Request, res: Response): Promise<void> {
         try {
-            // const InvoiceId = req.params.id as string;
-            // const htmlContent: any = await getInvoiceTemplate(InvoiceId);
-            // if (!htmlContent) throw new Error("Invoice HTML is empty!");
-            // const browser = await puppeteer.launch({
-            //     args: ['--no-sandbox', '--disable-setuid-sandbox'],
-            //     headless: true,
-            // });
-            // const page = await browser.newPage();
-            // // Set the HTML content with longer timeout
-            // await page.setContent(htmlContent, {
-            //     waitUntil: 'networkidle0', // More strict waiting condition
-            //     timeout: 30000 // Extend timeout to 30 seconds
-            // });
-            // // PDF options - match your original options exactly
-            // const pdfOptions: PDFOptions = {
-            //     format: 'A4',
-            //     printBackground: true,
-            // };
-            // // Generate PDF as buffer
-            // const pdfBuffer = await page.pdf(pdfOptions);
-
-            // await browser.close();
-            // // Make sure we have a valid buffer with content
-            // if (!pdfBuffer || pdfBuffer.length === 0) {
-            //     throw new Error("Generated PDF buffer is empty");
-            // }
-            // // Set response headers
-            // res.setHeader('Content-Type', 'application/pdf');
-            // res.setHeader('Content-Disposition', 'attachment; filename="invoice.pdf"');
-            // res.setHeader('Content-Length', pdfBuffer.length);
-            // // Send the buffer directly
-            // res.status(200).end(pdfBuffer);
             const InvoiceId = req.params.id as string;
             const htmlContent: any = await getInvoiceTemplate(InvoiceId);
             if (!htmlContent) throw new Error("Invoice HTML is empty!");

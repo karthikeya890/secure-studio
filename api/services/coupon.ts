@@ -2,7 +2,7 @@ import { Prisma } from "@prisma/client";
 import { prisma } from "../prismaClient";
 import { message } from "antd";
 
-export class CouponMiscService {
+class CouponMiscService {
     async reedemCoupon(couponCode: string, orderAmount: number, userId: string) {
         try {
             const coupon: any = await prisma.coupon.findFirst({
@@ -20,7 +20,7 @@ export class CouponMiscService {
             });
             const user: any = await prisma.usersOnCoupons.findFirst({ where: { userId, couponId: coupon.id as string } })
             if (coupon && coupon._count.redeemedBy < coupon.usageLimit && !user) {
-                return { value: coupon.value, valueType: coupon.valueType };
+                return { value: coupon.value, valueType: coupon.valueType, discountFor: coupon.discountFor };
             } else {
                 throw ({ message: "Invalid coupon", status: 400 });
             }
@@ -31,7 +31,7 @@ export class CouponMiscService {
     }
 
 
-    async reedemCouponPayment(couponCode: string, orderAmount: number,userId:string) {
+    async reedemCouponPayment(couponCode: string, orderAmount: number, userId: string) {
         try {
             const coupon: any = await prisma.coupon.findFirst({
                 where: {
@@ -49,9 +49,9 @@ export class CouponMiscService {
 
             const user: any = await prisma.usersOnCoupons.findFirst({ where: { userId, couponId: coupon.id as string } })
             if (coupon && coupon._count.redeemedBy < coupon.usageLimit && !user) {
-                return {id:coupon.id, value: coupon.value, valueType: coupon.valueType };
+                return { id: coupon.id, value: coupon.value, valueType: coupon.valueType };
             } else {
-                return 
+                return
             }
 
         } catch (error) {

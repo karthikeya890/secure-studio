@@ -117,7 +117,7 @@ async function services() {
   // Create Services under Virtual Address
   const businessAddress = await prisma.service.create({
     data: {
-      name: "Business Address Subscription",
+      name: "Business Address",
       categoryId: virtualCategory.id,
       availability: 100,
     },
@@ -125,7 +125,7 @@ async function services() {
 
   const mailHandling = await prisma.service.create({
     data: {
-      name: "Mail Handling Services",
+      name: "Mail Handling",
       categoryId: virtualCategory.id,
       availability: 100,
     },
@@ -133,7 +133,7 @@ async function services() {
 
   const callHandling = await prisma.service.create({
     data: {
-      name: "Call Handling Services",
+      name: "Call Handling",
       categoryId: virtualCategory.id,
       availability: 100,
     },
@@ -142,7 +142,7 @@ async function services() {
   // Create Services under Private Office
   const smallOffice = await prisma.service.create({
     data: {
-      name: "Small Office (1-2 People)",
+      name: "Small Office",
       categoryId: officeCategory.id,
       availability: 2,
     },
@@ -150,7 +150,7 @@ async function services() {
 
   const teamOffice = await prisma.service.create({
     data: {
-      name: "Team Office (3-5 People)",
+      name: "Team Office",
       categoryId: officeCategory.id,
       availability: 3,
     },
@@ -158,7 +158,7 @@ async function services() {
 
   const enterpriseOffice = await prisma.service.create({
     data: {
-      name: "Enterprise Office (6+ People)",
+      name: "Enterprise Office",
       categoryId: officeCategory.id,
       availability: 1,
     },
@@ -230,6 +230,15 @@ async function services() {
         gstValue: 18.0,
         duration: "MONTH",
       },
+      {
+        serviceId: meetingRoom.id,
+        name: "Meeting Room Hourly",
+        features: ["Check availability", "Select time & duration", "Confirm booking"],
+        price: 1000.0,
+        gstType: "PERCENTAGE",
+        gstValue: 18.0,
+        duration: "HOUR",
+      }
     ],
   });
 

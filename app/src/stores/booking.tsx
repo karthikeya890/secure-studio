@@ -3,12 +3,14 @@ import { fetchBookings } from "../api/booking";
 
 interface Booking {
     id: string;
+    code: string;
     service: any;
     subscription: any;
     payment: any;
     startTime: string;
     endTime: string;
     status: string;
+    invoice: any;
 }
 
 interface BookingState {
