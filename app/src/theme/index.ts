@@ -11,6 +11,7 @@ const theme = {
                 support: { value: "var(--support-color)" },
                 light: { value: "var(--light-color)" },
                 dark: { value: "var(--dark-color)" },
+                darkLight: { value: "var(--dark-light-color)" },
             },
             breakpointSizes: {
                 "3xs": { value: "14rem" },

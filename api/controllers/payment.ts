@@ -19,6 +19,19 @@ class PaymentController {
             const planDetails: any = await subscriptionMiscService.getSubscriptionDetailsForOrder(planId);
             const serviceId = planDetails.service.id;
             let totalAmount = planDetails?.durationValueSelect === "USER_SELECTED" ? scheduleCount * planDetails?.price : planDetails?.price;
+            let advance = 0;
+            switch (planDetails?.advanceType) {
+                case "MONTHS":
+                    advance = totalAmount * planDetails?.advanceValue as number
+                    break;
+                case "AMOUNT":
+                    advance = planDetails?.advanceValue as number
+                    break;
+
+                default:
+                    advance = 0
+                    break;
+            }
             let taxAmount = planDetails.gstType === "PERCENTAGE" ? (totalAmount * planDetails.gstValue) / 100 : planDetails.gstValue;
             let finalAmount = totalAmount + taxAmount;
             let discount;
@@ -28,13 +41,19 @@ class PaymentController {
             let couponId;
             if (coupon) {
                 const couponDetails: any = await couponMiscService.reedemCouponPayment(coupon, totalAmount, userId);
-                if (couponDetails) {
-                    couponId = couponDetails.id;
+                couponId = couponDetails.id;
+                const discountFor = couponDetails?.discountFor;
+                if (discountFor === "ADVANCE") {
+                    discount = couponDetails.valueType === "PERCENTAGE" ? (advance * couponDetails.value) / 100 : couponDetails.value;
+                    totalAmount = totalAmount - discount;
+                } else {
                     discount = couponDetails.valueType === "PERCENTAGE" ? (totalAmount * couponDetails.value) / 100 : couponDetails.value;
                     totalAmount = totalAmount - discount;
                     taxAmount = planDetails.gstType === "PERCENTAGE" ? (totalAmount * planDetails.gstValue) / 100 : planDetails.gstValue;
                     finalAmount = totalAmount + taxAmount;
                 }
+            } else {
+                finalAmount += advance
             }
 
             // create order

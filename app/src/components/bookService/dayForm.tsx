@@ -5,22 +5,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import useServiceStore from "../../stores/services";
-import { convertToUTC } from "../../utils/date";
+import { convertToUTC ,formatDate ,startDateEndDateDay} from "../../utils/date";
 
-// Utility function to format date as "YYYY-MM-DDTHH:00"
-const formatDate = (date: Date) => {
-    const pad = (n: number) => String(n).padStart(2, "0");
-    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:00`;
-};
 
-// Get current time and round up to the next full hour
-const now = new Date();
-if (now.getMinutes() > 0) {
-    now.setHours(now.getHours() + 1);
-}
-now.setMinutes(0, 0, 0);
 
-const startTimeDefault = formatDate(now);
+const { startTimeDefault, endTimeDefault } = startDateEndDateDay();
 
 const formSchema = z.object({
     startTime: z
@@ -39,7 +28,7 @@ const DayForm = () => {
         resolver: zodResolver(formSchema),
         defaultValues: {
             startTime: startTimeDefault,
-            endTime: formatDate(new Date(now.getTime() + 24 * 60 * 60 * 1000)), // Default +1 day
+            endTime: endTimeDefault, // Default +1 day
         },
     });
     const { scheduleCount, setScheduleCount,

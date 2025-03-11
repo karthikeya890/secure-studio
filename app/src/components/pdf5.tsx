@@ -4,6 +4,8 @@ import jsPDF from 'jspdf';
 import { Box, Flex } from '@chakra-ui/react';
 import PdfHeader from "../assets/pdfHeader.png"
 import pdfFooter from "../assets/pdfFooter.png"
+import useServiceStore from '../stores/services';
+import { convertDatePrimaryStyle } from '../utils/date';
 // Type definitions
 interface InvoiceItem {
     id: number;
@@ -44,6 +46,13 @@ interface PdfQualitySettings {
 }
 
 const Invoice: React.FC = () => {
+
+    const { bookingDetails } = useServiceStore();
+    const details = bookingDetails.plan;
+    // const price = (details?.durationValueSelect === "USER_SELECTED" ? 1 * details?.price : details?.price) || 0;
+
+
+
     // State for PDF quality settings and loading state
     const [isGenerating, setIsGenerating] = useState<boolean>(false);
     const [pdfSettings, setPdfSettings] = useState<PdfQualitySettings>({
@@ -187,7 +196,7 @@ const Invoice: React.FC = () => {
             maxWidth: '500px', // Reduced from 800px for UI display
             boxShadow: '0 4px 6px rgba(0, 0, 0, 0.05)',
             margin: '0 auto', // Center the invoice
-            transform: 'scale(0.95)', // Slightly reduce the scale for display
+            // transform: 'scale(0.95)', // Slightly reduce the scale for display
             transformOrigin: 'top center'
         },
         // Header styles
@@ -246,7 +255,7 @@ const Invoice: React.FC = () => {
         detailRow: {
             display: 'flex',
             justifyContent: 'space-between',
-            borderBottom: '1px solid #e2e8f0',
+            // borderBottom: '1px solid #e2e8f0',
             padding: '12px 0'
         },
         detailLabel: {
@@ -840,69 +849,51 @@ const Invoice: React.FC = () => {
                 ref={invoiceRef}
                 style={styles.invoiceContainer}
             >
-                {/* Header with company and invoice info
-                <div style={styles.header}>
-                    <div style={styles.headerLeft}>
-                        <h1 style={styles.invoiceTitle}>INVOICE</h1>
-                        <p style={styles.invoiceNumber}>#{invoiceData.invoiceNumber}</p>
+
+                {/* Invoice Details */}
+                <div style={styles.section}>
+                    {/* <h2 style={styles.sectionTitle}>Invoice Details:</h2> */}
+                    <div style={styles.detailRow}>
+                        <p style={styles.detailLabel}>Invoice Date:</p>
+                        <p style={styles.detailValue}>{convertDatePrimaryStyle(bookingDetails?.updatedAt)}</p>
                     </div>
-                    <div style={styles.headerRight}>
-                        <p style={styles.companyName}>{invoiceData.companyInfo.name}</p>
-                        {invoiceData.companyInfo.address.map((line, index) => (
-                            <p key={index} style={styles.companyDetail}>{line}</p>
-                        ))}
-                        <p style={styles.companyDetail}>{invoiceData.companyInfo.email}</p>
-                    </div>
-                </div> */}
+                </div>
 
                 {/* Customer Information */}
                 <Flex justifyContent={"space-between"}>
                     <div style={styles.section}>
                         <h2 style={styles.sectionTitle}>Invoice To:</h2>
                         <p style={styles.customerName}>{invoiceData.customer.name}</p>
-                        <p style={styles.customerDetail}>{invoiceData.customer.address}</p>
                         <p style={styles.customerDetail}>{invoiceData.customer.email}</p>
+                        <p style={styles.customerDetail}>GSTIN : GST1234567890</p>
+                        <p style={styles.customerDetail}>{invoiceData.customer.address}</p>
+
                     </div>
                     <div style={styles.section}>
                         <h2 style={styles.sectionTitle}>Invoice From:</h2>
                         <p style={styles.customerName}>Secure Studio</p>
-                        <p style={styles.customerDetail}>{invoiceData.customer.address}</p>
-                        <p style={styles.customerDetail}>{invoiceData.customer.email}</p>
+                        <p style={styles.customerDetail}>support@secure.studio</p>
+                        <p style={styles.customerDetail}>GSTIN : GST1234567890</p>
+                        <p style={styles.customerDetail}>3rd Floor, Jakotia Complex, <br />Warangal, Telangana 506002</p>
+
                     </div>
                 </Flex>
 
-                {/* Invoice Details */}
-                <div style={styles.section}>
-                    <h2 style={styles.sectionTitle}>Invoice Details:</h2>
-                    <div style={styles.detailRow}>
-                        <p style={styles.detailLabel}>Invoice Date:</p>
-                        <p style={styles.detailValue}>{invoiceData.date}</p>
-                    </div>
-                    <div style={styles.detailRow}>
-                        <p style={styles.detailLabel}>Payment Terms:</p>
-                        <p style={styles.detailValue}>{invoiceData.paymentTerms}</p>
-                    </div>
-                </div>
+
 
                 {/* Invoice Items Table */}
                 <table style={styles.table}>
                     <thead style={styles.tableHeader}>
                         <tr>
-                            <th style={styles.tableHeaderCell}>Description</th>
-                            <th style={styles.tableHeaderCellRight}>Qty</th>
-                            <th style={styles.tableHeaderCellRight}>Rate</th>
+                            <th style={styles.tableHeaderCell}>Service</th>
                             <th style={styles.tableHeaderCellRight}>Amount</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {invoiceData.items.map((item) => (
-                            <tr key={item.id} style={styles.tableRow}>
-                                <td style={styles.tableCell}>{item.description}</td>
-                                <td style={styles.tableCellRight}>{item.quantity}</td>
-                                <td style={styles.tableCellRight}>${item.rate.toFixed(2)}</td>
-                                <td style={styles.tableCellRight}>${item.amount.toFixed(2)}</td>
-                            </tr>
-                        ))}
+                        <tr style={styles.tableRow}>
+                            <td style={styles.tableCell}>{bookingDetails?.service?.name}</td>
+                            <td style={styles.tableCellRight}>{bookingDetails?.payment?.amount}</td>
+                        </tr>
                     </tbody>
                 </table>
 

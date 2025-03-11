@@ -4,12 +4,11 @@ import DashboardIcon from "../../assets/dashboard.svg"
 import BookingIcon from "../../assets/booking.svg"
 import SettingIcon from "../../assets/settings.svg"
 import logo from "../../assets/logo-lg.png"
-import ServicesIcon from "../../assets/services.svg"
-
+import SubscriptionIcon from "../../assets/subscriptions.svg"
 const Sidebar = () => {
     const sections = [
         { name: "Dashboard", path: "/dashboard", icon: DashboardIcon },
-        { name: "Services", path: "/services", icon: ServicesIcon },
+        { name: "Subscriptions", path: "/subscriptions", icon: SubscriptionIcon },
         { name: "Bookings", path: "/bookings", icon: BookingIcon },
         { name: "Settings", path: "/settings", icon: SettingIcon },
     ]
@@ -22,10 +21,10 @@ const Sidebar = () => {
                         alignItems={"center"} gap={3} position={"relative"} m={3} my={2} p={2} opacity={isActive ? 1 : 0.7} style={{ marginRight: isActive ? "0px" : "auto" }}
                         borderRadius={25} borderRightRadius={0} bgGradient={isActive ? "to-r" : ""} gradientFrom="blue.400" gradientTo="blue.200" >
                         {isActive && <>
-                            <Box position={"absolute"} h={5} w={5} right={0} top={-5} zIndex={9999} bg={"blue.200"} >
+                            <Box position={"absolute"} h={5} w={5} right={0} top={-5} zIndex={100} bg={"blue.200"} >
                                 <Box w={"100%"} h={"100%"} borderBottomRightRadius={25} bg={"white"}></Box>
                             </Box>
-                            <Box position={"absolute"} h={5} w={5} bg={"blue.200"} right={0} bottom={-5} zIndex={9999}  >
+                            <Box position={"absolute"} h={5} w={5} bg={"blue.200"} right={0} bottom={-5} zIndex={100}  >
                                 <Box w={"100%"} h={"100%"} borderTopRightRadius={25} bg={"white"}></Box>
                             </Box>
                         </>}

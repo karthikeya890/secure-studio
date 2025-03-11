@@ -2,13 +2,11 @@ import { Button, Spinner } from '@chakra-ui/react';
 import { cancelOrder, createOrder, paymentFail, verifyPayment } from '../../api/payment';
 import { useState } from 'react';
 import { toaster } from "../ui/toaster";
-import { useInvoicesStore } from '../../stores/invoice';
 import useServiceStore from '../../stores/services';
 import { useNavigate } from 'react-router-dom';
 
 const RazorpayPayment = ({ totalAmount, coupon }: any) => {
     const { selectedPlan, setBookingDetails, scheduleCount, durationDates } = useServiceStore();
-    const { previewInvoice } = useInvoicesStore()
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const handlePayment = async () => {
@@ -35,22 +33,18 @@ const RazorpayPayment = ({ totalAmount, coupon }: any) => {
                 "order_id": orderId,
                 image: 'https://dev-22neuro.blr1.cdn.digitaloceanspaces.com/Secure-Studio/dev/documents/test/861390f0-991a-4ecf-bf39-753753a2f1b7.png',
                 handler: async function (data: any) {
-                    let InvoiceId = "";
                     try {
                         toaster.update(toastId, { description: "Payment verifying...", type: "loading" });
                         let response = await verifyPayment({ ...data, bookingId: order.bookingId, durationDates });
-                        InvoiceId = response.data?.invoice?.id
                         setBookingDetails(response.data);
                         toaster.update(toastId, { description: response.message || "payment verified", type: "success" });
                         setLoading(false);
-                        navigate('/services/book/confirmation')
+                        navigate('/subscriptions/book/confirmation')
                     } catch (error: any) {
                         if (error.status === 500) {
                             toaster.update(toastId, { description: error.data.message || "payment verified failed", type: "error" });
                         }
                         setLoading(false);
-                    } finally {
-                        previewInvoice(InvoiceId);
                     }
                 },
                 prefill: {

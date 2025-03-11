@@ -4,31 +4,10 @@ import { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
-import { convertToUTC } from "../../utils/date";
+import { convertToUTC, getFutureDateYear, startDateEndDateYear, formatDate } from "../../utils/date";
 import useServiceStore from "../../stores/services";
 
-const formatDate = (date: Date) => {
-    const pad = (n: number) => String(n).padStart(2, "0");
-    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:00`;
-};
-
-const now = new Date();
-if (now.getMinutes() > 0) {
-    now.setHours(now.getHours() + 1);
-}
-now.setMinutes(0, 0, 0);
-
-const getFutureDate = (date: Date, yearsToAdd: number) => {
-    const futureDate = new Date(date);
-    futureDate.setFullYear(futureDate.getFullYear() + yearsToAdd);
-    if (futureDate.getDate() > 28) {
-        futureDate.setDate(28);
-    }
-    return futureDate;
-};
-
-const startTimeDefault = formatDate(now);
-const endTimeDefault = formatDate(getFutureDate(now, 1));
+const { startTimeDefault, endTimeDefault } = startDateEndDateYear();
 
 const formSchema = z.object({
     startTime: z
@@ -57,7 +36,7 @@ const YearForm = () => {
             if (startDate.getDate() > 28) {
                 setValue("startTime", formatDate(new Date(startDate.setDate(28))));
             }
-            setValue("endTime", formatDate(getFutureDate(startDate, scheduleCount)));
+            setValue("endTime", formatDate(getFutureDateYear(startDate, scheduleCount)));
         }
     }, [startTime, scheduleCount, setValue]);
 

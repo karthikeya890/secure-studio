@@ -1,5 +1,6 @@
 import { prisma } from "../prismaClient";
 import { Prisma } from "@prisma/client";
+import { getTimeLeft, getTimeUntilStart } from "../utils/date";
 
 class BookingService {
     // Get all bookings with pagination
@@ -66,7 +67,53 @@ class BookingMiscService {
     // Update a booking
     async updateBookingForPaymentVerification(id: string, data: Prisma.BookingUncheckedUpdateInput) {
         try {
-            return await prisma.booking.update({ where: { id }, data, include: { service: true, payment: { select: { code: true } }, user: { select: { name: true } }, invoice: { select: { id: true } } } });
+            return await prisma.booking.update(
+                {
+                    where: { id }, data,
+                    include: {
+                        service: true,
+                        payment: { select: { code: true, amount: true } },
+                        user: { select: { name: true, email: true } },
+                        invoice: { select: { id: true } }
+                    }
+                });
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    // Get all active bookings with pagination
+    async getAllActiveBookingsOfUser(userId: string, page: number = 1, limit: number = 10) {
+        try {
+            const now = new Date();
+
+            const [bookings, totalCount] = await Promise.all([
+                prisma.booking.findMany({
+                    where: { userId, endTime: { gt: now }, status: "CONFIRMED" },
+                    include: {
+                        service: true,
+                        payment: { select: { id: true, amount: true, code: true, status: true } },
+                        subscription: { select: { defaultValue: true, duration: true } },
+                        invoice: true
+                    },
+                    skip: (page - 1) * limit,
+                    take: limit,
+                    orderBy: { endTime: "asc" } // Sort by soonest expiry
+                }),
+                prisma.booking.count({ where: { userId, endTime: { gt: now }, status: "CONFIRMED" } })
+            ]);
+
+            // Add timeLeft and isStarted key to each booking
+            const updatedBookings = bookings.map((booking: any) => {
+                const isStarted = booking.startTime <= now;
+                return {
+                    ...booking,
+                    isStarted,
+                    timeLeft: isStarted ? getTimeLeft(booking.endTime) : getTimeUntilStart(booking.startTime)
+                };
+            });
+
+            return { bookings: updatedBookings, totalCount };
         } catch (error) {
             throw error;
         }

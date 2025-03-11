@@ -61,8 +61,7 @@ model Subscription {
   name                String              @default("name")
   features            String[]
   price               Float               @default(0)
-  originalPrice       Float               @default(0)
-  discountPrice       Float               @default(0)
+  savePercentage      Int                 @default(0)
   gstType             GstType             @default(PERCENTAGE)
   gstValue            Float               @default(18.0) // Default GST set to 18%
   duration            SubscriptionType // HOUR, DAY, MONTH, YEAR

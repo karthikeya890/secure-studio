@@ -6,35 +6,9 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { convertToUTC } from "../../utils/date";
 import useServiceStore from "../../stores/services";
+import { startDateEndDateMonth, formatDate, getFutureDateMonth } from "../../utils/date";
 
-// Function to format date-time as YYYY-MM-DDTHH:00
-const formatDate = (date: Date) => {
-    const pad = (n: number) => String(n).padStart(2, "0");
-    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:00`;
-};
-
-// Get the current date-time and round to the next full hour
-const now = new Date();
-if (now.getMinutes() > 0) {
-    now.setHours(now.getHours() + 1); // Move to next hour
-}
-now.setMinutes(0, 0, 0); // Set minutes and seconds to 00
-
-// Function to get a valid future date (keeping within 28-day rule)
-const getFutureDate = (date: Date, monthsToAdd: number) => {
-    const futureDate = new Date(date);
-    futureDate.setMonth(futureDate.getMonth() + monthsToAdd);
-
-    // Ensure the day does not exceed the 28th
-    if (futureDate.getDate() > 28) {
-        futureDate.setDate(28);
-    }
-    return futureDate;
-};
-
-// Default values
-const startTimeDefault = formatDate(now);
-const endTimeDefault = formatDate(getFutureDate(now, 1));
+const { startTimeDefault, endTimeDefault } = startDateEndDateMonth();
 
 const formSchema = z.object({
     startTime: z
@@ -72,10 +46,15 @@ const MonthForm = () => {
             if (startDate.getDate() > 28) {
                 setValue("startTime", formatDate(new Date(startDate.setDate(28))));
             }
-            setValue("endTime", formatDate(getFutureDate(startDate, scheduleCount)));
+            setValue("endTime", formatDate(getFutureDateMonth(startDate, scheduleCount)));
             onSubmit();
         }
     }, [startTime, scheduleCount, setValue]);
+
+    useEffect(() => {
+        onSubmit()
+        console.log("times selected");
+    }, [selectedPlan?.id])
 
     return (
         <form onSubmit={onSubmit}>

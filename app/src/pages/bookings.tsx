@@ -1,11 +1,11 @@
-import { HStack, Breadcrumb, Stack, Table, Spinner, Badge, Flex, Button } from "@chakra-ui/react";
+import { HStack, Breadcrumb, Stack, Table, Spinner, Badge, Flex, Button, Text } from "@chakra-ui/react";
 import { PaginationItems, PaginationNextTrigger, PaginationPrevTrigger, PaginationRoot } from "../components/ui/pagination";
 import { useEffect } from "react";
 import { useBookingsStore } from "../stores/booking";
 import { convertDateSecondaryStyle } from "../utils/date";
 import { Tooltip } from "../components/ui/tooltip";
 import Eye from "../assets/eye";
-
+import { NavLink } from "react-router-dom";
 const getBadgeColor = (status: string): string => {
     switch (status) {
         case "COMPLETED":
@@ -34,15 +34,10 @@ const Bookings = () => {
                 <Breadcrumb.Root size={"lg"}>
                     <Breadcrumb.List>
                         <Breadcrumb.Item>
-                            <Breadcrumb.Link href="#">Services</Breadcrumb.Link>
-                        </Breadcrumb.Item>
-                        <Breadcrumb.Separator />
-                        <Breadcrumb.Item>
-                            <Breadcrumb.CurrentLink>Book Service</Breadcrumb.CurrentLink>
+                            <NavLink to={"/bookings"} end >{({ isActive }) => (<Text fontWeight={isActive ? "bold" : ""} color={isActive ? "dark" : ""} >Bookings</Text>)}</NavLink>
                         </Breadcrumb.Item>
                     </Breadcrumb.List>
                 </Breadcrumb.Root>
-                <Button borderRadius={25} bg={"blackAlpha.900"} >Book service</Button>
             </Flex>
             <Flex gap={2} flexGrow={1} overflowY={"auto"} flexDir={"column"} justifyContent={"space-between"}>
                 {loading ? (

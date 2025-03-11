@@ -4,31 +4,18 @@ import { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
-import { convertToUTC } from "../../utils/date";
+import { convertToUTC, startDateEndDateHour, formatDateTime } from "../../utils/date";
 import useServiceStore from "../../stores/services";
 
-// Utility function to format time as "YYYY-MM-DDTHH:00"
-const formatDateTime = (date: Date) => {
-    const pad = (n: number) => String(n).padStart(2, "0");
-    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:00`;
-};
 
-// Get current time and round to the next full hour
-const now = new Date();
-if (now.getMinutes() > 0) {
-    now.setHours(now.getHours() + 1);
-}
-now.setMinutes(0, 0, 0);
-
-const startTimeDefault = formatDateTime(now);
-const endTimeDefault = formatDateTime(new Date(now.getTime() + 1 * 60 * 60 * 1000));
+const { startTimeDefault, endTimeDefault } = startDateEndDateHour();
 
 const formSchema = z.object({
     startTime: z
         .string({ required_error: "Start time is required" })
         .refine((value) => !isNaN(Date.parse(value)), { message: "Invalid date format" })
         .refine((value) => new Date(value).getMinutes() === 0, { message: "Start time must be in full hours (HH:00)" })
-        .refine((value) => new Date(value) >= now, { message: "Start time cannot be in the past" }),
+        .refine((value) => new Date(value) >= new Date(), { message: "Start time cannot be in the past" }),
 
     endTime: z.string()
 });
@@ -67,10 +54,6 @@ const HourForm = () => {
             onSubmit();
         }
     }, [startTime, scheduleCount]);
-
-
-
-
 
     const handleIncreaseHours = () => setScheduleCount(scheduleCount + 1);
     const handleDecreaseHours = () => setScheduleCount(Math.max(1, scheduleCount - 1));

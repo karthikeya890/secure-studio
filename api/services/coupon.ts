@@ -49,7 +49,7 @@ class CouponMiscService {
 
             const user: any = await prisma.usersOnCoupons.findFirst({ where: { userId, couponId: coupon.id as string } })
             if (coupon && coupon._count.redeemedBy < coupon.usageLimit && !user) {
-                return { id: coupon.id, value: coupon.value, valueType: coupon.valueType };
+                return { id: coupon.id, value: coupon.value, valueType: coupon.valueType, discountFor: coupon.discountFor };
             } else {
                 return
             }

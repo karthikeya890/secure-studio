@@ -14,8 +14,8 @@ import Pdf from "./components/pdf"
 import Pdf2 from "./components/pdf2"
 import Pdf3 from "./components/pdf3"
 import Pdf5 from "./components/pdf5"
-import Services from "./pages/services";
-import BookService from "./components/bookService";
+import Services from "./pages/subscriptions";
+import BookSubscription from "./components/booking";
 import Invoice from "./components/Invoice";
 
 const App = () => {
@@ -40,9 +40,9 @@ const App = () => {
           <Route element={<DashBoardLayout />}>
             <Route path="dashboard" element={<DashBoard />} />
             <Route path="bookings" element={<Bookings />} />
-            <Route path="/services">
+            <Route path="/subscriptions">
               <Route index element={<Services />} />
-              <Route path="book" element={<BookService />} />
+              <Route path="book" element={<BookSubscription />} />
               <Route path="book/confirmation" element={<PaymentConfirmation />} />
             </Route>
             <Route path="settings" element={<Construction />} />

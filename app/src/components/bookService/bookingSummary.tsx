@@ -6,9 +6,9 @@ import WrongIcon from "../../assets/wrong";
 import useServiceStore from "../../stores/services";
 
 const PaymentSummary: React.FC = () => {
-    const { selectedPlan, scheduleCount, visiblePaymentCard } = useServiceStore();
+    const { selectedPlan, scheduleCount } = useServiceStore();
     const details: any = selectedPlan;
-    const price = selectedPlan?.durationValueSelect === "USER_SELECTED" ? scheduleCount * details?.price : details?.price;
+    const price = (selectedPlan?.durationValueSelect === "USER_SELECTED" ? scheduleCount * details?.price : details?.price) || 0;
     let advance: number;
     switch (selectedPlan?.advanceType) {
         case "MONTHS":
@@ -27,8 +27,8 @@ const PaymentSummary: React.FC = () => {
     const [coupon, setCoupon] = useState<string>("");
     const [discount, setDiscount] = useState<number>(0);
     const [advanceDiscount, setAdvanceDiscount] = useState<number>(0);
-    const taxAmount = taxType === "PERCENTAGE" ? ((price - discount) * taxValue) / 100 : taxValue;
-    const total = (price - discount) + taxAmount + (advance - advanceDiscount);
+    const taxAmount = (taxType === "PERCENTAGE" ? ((price - discount) * taxValue) / 100 : taxValue) || 0;
+    const total = ((price - discount) + taxAmount + (advance - advanceDiscount) || 0);
 
     // Handle coupon code
     const applyCoupon = async () => {
@@ -57,7 +57,7 @@ const PaymentSummary: React.FC = () => {
     };
 
     return (
-        <Card.Root pointerEvents={visiblePaymentCard ? "all" : "none"} opacity={visiblePaymentCard ? 1 : 0.8}
+        <Card.Root pointerEvents={selectedPlan?.id ? "all" : "none"} opacity={selectedPlan?.id ? 1 : 0.8}
             border={"2px solid"} borderColor={"gray.200"}
             flexGrow={1} borderRadius={20} >
             <CardBody>
@@ -75,7 +75,7 @@ const PaymentSummary: React.FC = () => {
                             <Text fontSize="md" fontWeight="bold" color="green.500">-₹{discount?.toFixed(2)}</Text>
                         </HStack>
                         <HStack justify="space-between" mb={2}>
-                            <Text fontSize="md" color="gray.600">Tax ({taxType === "PERCENTAGE" ? `${taxValue}%` : `₹${taxValue}`}):</Text>
+                            <Text fontSize="md" color="gray.600">Tax ({taxType ? (taxType === "PERCENTAGE" ? `${taxValue}%` : `₹${taxValue}`) : "0%"}) :</Text>
                             <Text fontSize="md" fontWeight="bold">₹{taxAmount?.toFixed(2)}</Text>
                         </HStack>
                         <HStack justify="space-between" mb={4}>

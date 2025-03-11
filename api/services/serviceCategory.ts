@@ -4,7 +4,7 @@ class ServiceCategoryService {
 
   async getAllServiceCategories() {
     try {
-      return await prisma.serviceCategory.findMany({ include: { services: { include: { subscriptions: true } } } });
+      return await prisma.serviceCategory.findMany({ include: { services: { include: { subscriptions: { include: { service: true } } } } } });
     } catch (error) {
       throw (error)
     }
